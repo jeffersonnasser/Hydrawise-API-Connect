@@ -27,9 +27,12 @@ definition(
 
 
 preferences {
+page(name: "pageOne", title: "Controller Credentials", nextPage: "pageTwo", uninstall: true) 
+{
     section("Configure your Hydrawise credentials") {
         input "apiKey", "text", title: "Hydrawise Controller API Key", required: true
     }
+ }
 }
 
 def installed() {
