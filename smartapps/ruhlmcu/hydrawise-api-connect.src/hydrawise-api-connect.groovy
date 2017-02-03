@@ -24,27 +24,24 @@ definition(
     iconX3Url: "http://icons.wxug.com/i/c/k/cloudy.gif",
     singleInstance: true,
     oauth: true)
-/*
+
 preferences {
 
-    page(name: "pageOne", title: "Controller Credentials", nextPage: "pageTwo") 
-    page(name: "pageTwo", title: "Current Controller Status", uninstall: true) 
-    page(name: "pageThree", title: "Current Controller Status", uninstall: true) 
+    page(name: "pageOne") 
+    page(name: "pageTwo") 
 }
 //Pages
 
 def pageOne() {
-    section("Configure your Hydrawise credentials") {
-        input "apiKey", "text", title: "Hydrawise Controller API Key", required: true
-    }
+		dynamicPage(name: "pageOne", title: "Controller Credentials", install: true){
+    		section("Configure your Hydrawise credentials") {
+        		input "apiKey", "text", title: "Hydrawise Controller API Key", required: true
+    		}
+		}
 }
 
 def pageTwo () {
-
-}
-
-def pageThree () {
-
+		  dynamicPage(name: "pageTwo", title: "Current Controller Status", uninstall: true)
 }
 
 //Handlers
@@ -62,7 +59,7 @@ def initialize() {
  //   runEvery5Minutes(sprinklerGet(evt))
       subscribe(app, sprinklerGet)
 }
-
+/*
 def sprinklerGet(evt) {
     log.info "app event ${evt.name}:${evt.value} received"
     def params = [
