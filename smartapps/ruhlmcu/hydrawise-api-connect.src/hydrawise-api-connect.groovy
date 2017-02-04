@@ -33,7 +33,7 @@ preferences {
 //Pages
 
 def pageOne() {
-		dynamicPage(name: "pageOne", title: "Controller Credentials", install: true){
+		dynamicPage(name: "pageOne", title: "Controller Credentials", install: true, uninstall: true){
     		section("Configure your Hydrawise credentials") {
         		input "apiKey", "text", title: "Hydrawise Controller API Key", required: true
  //             sendNotificationEvent("Controller Id: ${resp.data.controller_id}")
@@ -43,7 +43,7 @@ def pageOne() {
 
 def pageTwo () {
 		  dynamicPage(name: "pageTwo", title: "Current Controller Status", uninstall: true)
- //         sendNotificationEvent( "Controller Id: ${resp.data.controller_id}")
+          sendNotificationEvent( "Controller Id: ${resp.data.controller_id}")
 }
 
 //Handlers
@@ -58,12 +58,12 @@ def updated() {
 }
 
 def initialize() {
- //   runEvery5Minutes(sprinklerGet(evt))
-      subscribe(app, sprinklerGet(evt))
+//   runEvery5Minutes(sprinklerGet(evt))
+      subscribe(app, sprinklerGet())
 }
 //Methods
 def sprinklerGet(evt) {
-   log.info "app event ${evt.name}:${evt.value} received"
+//    log.info "app event ${evt.name}:${evt.value} received"
     def params = [
         uri: "https://hydrawise.com/api/v1/",
         path: "statusschedule.php",
