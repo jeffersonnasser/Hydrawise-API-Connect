@@ -33,7 +33,7 @@ preferences {
 //Pages
 
 def pageOne() {
-		dynamicPage(name: "pageOne", title: "Controller Credentials", install: true, uninstall: true){
+		dynamicPage(name: "pageOne", title: "Controller Credentials", nextPage: "pageTwo", install: true, uninstall: true){
     		section("Configure your Hydrawise credentials") {
         		input "apiKey", "text", title: "Hydrawise Controller API Key", required: true
  //             sendNotificationEvent("Controller Id: ${resp.data.controller_id}")
@@ -89,6 +89,7 @@ def sprinklerGet(evt) {
            {
                resp.data.relays.each {
                    log.info "${it.name} ${it.relay_id}"
+                   success()
            }
           log.info "Current Controller ID: ${resp.data.controller_id}"
 
@@ -97,4 +98,37 @@ def sprinklerGet(evt) {
     } catch (e) {
         log.error "something went wrong: $e"
     }
+}
+// Example success method
+def success() {
+        def message = """
+                <p>Success</p>
+                <p>Click 'Done' to finish setup.</p>
+        """
+        displayMessageAsHtml(message)
+}
+
+// Example fail method
+def fail() {
+    def message = """
+        <p>There was an error connecting your account with SmartThings</p>
+        <p>Please try again.</p>
+    """
+    displayMessageAsHtml(message)
+}
+
+def displayMessageAsHtml(message) {
+    def html = """
+        <!DOCTYPE html>
+        <html>
+            <head>
+            </head>
+            <body>
+                <div>
+                    ${message}
+                </div>
+            </body>
+        </html>
+    """
+    render contentType: 'text/html', data: html
 }
