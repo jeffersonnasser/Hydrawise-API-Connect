@@ -61,9 +61,9 @@ def initialize() {
  //   runEvery5Minutes(sprinklerGet(evt))
       subscribe(app, sprinklerGet(evt))
 }
-
+//Methods
 def sprinklerGet(evt) {
-//   log.info "app event ${evt.name}:${evt.value} received"
+   log.info "app event ${evt.name}:${evt.value} received"
     def params = [
         uri: "https://hydrawise.com/api/v1/",
         path: "statusschedule.php",
