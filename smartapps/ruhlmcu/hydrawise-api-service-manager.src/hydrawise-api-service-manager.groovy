@@ -26,13 +26,9 @@ definition(
     oauth: true)
 
 preferences {
-    page(name: "pageOne") 
-    page(name: "pageTwo") 
-}
 //Pages
 
-def pageOne() {
-	dynamicPage(name: "pageOne", title: "Controller Credentials", nextPage: "pageTwo", install: true, uninstall: true){
+page (name: "pageOne", title: "Controller Credentials", install: true, uninstall: true){
     	section("Configure your Hydrawise credentials") {
         	input "apiKey", "text", title: "Hydrawise Controller API Key", required: true
         }
@@ -43,21 +39,6 @@ def pageOne() {
     	}
 	}
 }
-def pageTwo () {
-	dynamicPage(name: "pageTwo", title: "Current Controller Status", uninstall: true){
-        	section("Enter Your Name") {
-        	input "ownerName", "text", title: "Owner Name", required: true
-        }
-    	section("paragraph") {
-        	paragraph "This is how you can make a paragraph element"
-            paragraph title: "paragraph title",
-            required: true,
-            	"This is a long description that rambles on and on and on..."
-    	}
-	}
-        sendNotificationEvent("Controller Id: ${resp.data.controller_id}")
-}
-
 //Handlers
 def installed() {
     log.info "Installed with settings: ${settings}"
@@ -71,7 +52,7 @@ def updated() {
 
 def initialize() {
 //   runEvery5Minutes(sprinklerGet(evt))
-	subscribe(app, sprinklerGet())
+	subscribe(app, sprinklerGet)
 }
 //Methods
 //This is the Discovery method for my Hydrawise Controller
@@ -90,7 +71,7 @@ def sprinklerGet(evt) {
           log.info "Current Controller ID: ${resp.data.controller_id}"
           log.info "Current Customer ID: ${resp.data.customer_id}"
           log.info "Current Controller Name: ${resp.data.current_controller}"
-
+          success()
           }         
     } catch (e) {
         log.error "something went wrong: $e"
