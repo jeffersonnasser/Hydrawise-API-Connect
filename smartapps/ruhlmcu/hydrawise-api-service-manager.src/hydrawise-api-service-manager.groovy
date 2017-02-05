@@ -51,7 +51,7 @@ def updated() {
 }
 
 def initialize() {
-//   runEvery5Minutes(sprinklerGet(evt))
+    runEvery1Hour(sprinklerGet)
 	subscribe(app, sprinklerGet)
 }
 //Methods
@@ -61,16 +61,15 @@ def sprinklerGet(evt) {
         uri: "https://hydrawise.com/api/v1/",
         path: "customerdetails.php",
         query: [
-           "api_key": apiKey,
-           "type": "controllers"
+           "api_key": apiKey,           "type": "controllers"
         ]
     ]
     log.info "parameters to send ${params}"
     try {
           httpGet(params) { resp ->
-          log.info "Current Controller ID: ${resp.data.controller_id}"
-          log.info "Current Customer ID: ${resp.data.customer_id}"
-          log.info "Current Controller Name: ${resp.data.current_controller}"
+          sendNotificationEvent( "Current Controller ID: ${resp.data.controller_id}")
+          sendNotificationEvent( "Current Customer ID: ${resp.data.customer_id}")
+          sendNotificationEvent( "Current Controller Name: ${resp.data.current_controller}")
           success()
           }         
     } catch (e) {
