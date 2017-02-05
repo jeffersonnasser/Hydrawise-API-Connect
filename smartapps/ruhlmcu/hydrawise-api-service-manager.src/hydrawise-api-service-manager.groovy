@@ -20,8 +20,8 @@ definition(
     description: "Connect your Smartthings Controller to your Hydrawise Irrigation Controller.",
     category: "Green Living",
     iconUrl: "http://cdn.device-icons.smartthings.com/Outdoor/outdoor12-icn@2x.png",
-    iconX2Url: "http://icons.wxug.com/i/c/k/cloudy.gif",
-    iconX3Url: "http://icons.wxug.com/i/c/k/cloudy.gif",
+    iconX2Url: "http://cdn.device-icons.smartthings.com/Outdoor/outdoor12-icn@2x.png",
+    iconX3Url: "http://cdn.device-icons.smartthings.com/Outdoor/outdoor12-icn@2x.png",
     singleInstance: true,
     oauth: true)
 
