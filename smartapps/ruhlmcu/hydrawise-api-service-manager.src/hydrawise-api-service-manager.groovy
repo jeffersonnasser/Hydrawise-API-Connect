@@ -67,12 +67,17 @@ def sprinklerGet(evt) {
     log.info "parameters to send ${params}"
     try {
           httpGet(params) { resp ->
-          sendNotificationEvent( "Current Controller ID: ${resp.data.controller_id}")
-          sendNotificationEvent( "Current Customer ID: ${resp.data.customer_id}")
-          sendNotificationEvent( "Current Controller Name: ${resp.data.current_controller}")
-          success()
-          }         
-    } catch (e) {
+               log.info "$resp.data"
+               if ($resp.data?.error_msg?.contains("unauthorised")){
+                   log.debug "$resp.data.error_msg"
+               }
+               else {
+                    sendNotificationEvent( "Current Controller ID: ${resp.data.controller_id}")
+                    sendNotificationEvent( "Current Customer ID: ${resp.data.customer_id}")
+                    sendNotificationEvent( "Current Controller Name: ${resp.data.current_controller}")
+                }
+            }
+      }catch (e) {
         log.error "something went wrong: $e"
     }
 }
