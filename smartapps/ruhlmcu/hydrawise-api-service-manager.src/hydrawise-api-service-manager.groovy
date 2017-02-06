@@ -32,6 +32,8 @@ page (name: "pageOne", title: "Controller Credentials", install: true, uninstall
     	section("Configure your Hydrawise credentials") {
         	input "apiKey", "text", title: "Hydrawise Controller API Key", required: true
             input "debugOn", "bool", title: "Turn on to activate debug messages", defaultValue: false
+            input "notifyOn", "bool", title: "Turn on to activate notifications", defaultValue: false
+            input "SMSOn", "bool", title: "Turn on to activate SMS messages", defaultValue: false
         }
         section("Set-up Instructions") {            
         	paragraph title: "Set-up Instructions",
@@ -65,7 +67,9 @@ def sprinklerGet(evt) {
            "api_key": apiKey, "type": "controllers"
         ]
     ]
-    log.info "parameters to send ${params}"
+    if (debugOn){
+           log.info "parameters to send ${params}"
+    }
     try {
           httpGet(params) { resp ->
                if (debugOn){
