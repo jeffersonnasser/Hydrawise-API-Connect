@@ -26,20 +26,31 @@ definition(
     oauth: true)
 
 preferences {
-//Pages
-
-page (name: "pageOne", title: "Controller Credentials", install: true, uninstall: true){
+    page name:"pageOne"
+    page name:"pageSettings"
+}
+def pageOne(){
+dynamicPage (name: "pageOne", title: "Controller Credentials", install: true, uninstall: true){
     	section("Configure your Hydrawise credentials") {
         	input "apiKey", "text", title: "Hydrawise Controller API Key", required: true
-            input "debugOn", "bool", title: "Turn on to activate debug messages", defaultValue: false
-            input "notifyOn", "bool", title: "Turn on to activate notifications", defaultValue: false
-            input "SMSOn", "bool", title: "Turn on to activate SMS messages", defaultValue: false
         }
         section("Set-up Instructions") {            
         	paragraph title: "Set-up Instructions",
             required: true,
 					"This is the set-up page to allow you to access your Hydrawise Controller. The API Key is found in the Account section of your Hydrawise Dashboard."
     	}
+        section([title:"Options", mobileOnly:false]) {
+			href "pageSettings", title: "Settings", description: none
+        }
+	}
+}
+def pageSettings(){
+dynamicPage (name: "pageSettings", title: "App Settings", uninstall: false){
+    	section("Configure your Hydrawise Settings") {
+            input "debugOn", "bool", title: "Turn on to activate debug messages", defaultValue: false
+            input "notifyOn", "bool", title: "Turn on to activate notifications", defaultValue: false
+            input "SMSOn", "bool", title: "Turn on to activate SMS messages", defaultValue: false
+        }
 	}
 }
 //Handlers
@@ -73,8 +84,8 @@ def sprinklerGet(evt) {
     try {
           httpGet(params) { resp ->
                if (debugOn){
-               log.info "$resp.data"             
-               log.info "$resp.data.error_msg"
+               log.debug "$resp.data"             
+               log.debug "$resp.data.error_msg"
                }
                if (resp.data.controller_id != ""){
                     log.info( "Current Controller ID: ${resp.data.controller_id}")
@@ -83,11 +94,13 @@ def sprinklerGet(evt) {
                }
                else {
                    if (debugOn){
-                   log.debug ("$resp.data")
-                   sendNotificationEvent( "API Key Error: ${resp.data}")}
-                }
-            }
-      }catch (e) {
+                        log.debug ("$resp.data")
+                   }
+                   sendNotificationEvent("API Key Error: ${resp.data}")
+               }
+          }
+      }
+      catch (e) {
         log.error "something went wrong: $e"
     }
 }
