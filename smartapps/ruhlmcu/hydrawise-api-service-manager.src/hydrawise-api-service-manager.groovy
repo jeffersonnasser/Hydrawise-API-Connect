@@ -27,6 +27,7 @@ definition(
 
 preferences {
     page name:"pageOne"
+    page name:"pageStatus"
     page name:"pageSettings"
 }
 def pageOne(){
@@ -39,13 +40,17 @@ dynamicPage (name: "pageOne", title: "Controller Credentials", install: true, un
             required: true,
 					"This is the set-up page to allow you to access your Hydrawise Controller. The API Key is found in the Account section of your Hydrawise Dashboard."
     	}
-        section "Current Controller"{
+}
+}
+def pageStatus(){
+dynamicPage (name: "pageStatus", title: "Controller Status", uninstall: false){
+        section ("Current Controller") {
             def apiValid = validateAPI()
             if (apiValid) {
                 "The current controller is"
             }
         }
-	}
+} 
 }
 def pageSettings(){
 dynamicPage (name: "pageSettings", title: "App Settings", uninstall: false){
