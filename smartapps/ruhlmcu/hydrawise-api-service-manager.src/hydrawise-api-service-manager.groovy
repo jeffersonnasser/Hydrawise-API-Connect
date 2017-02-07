@@ -27,7 +27,7 @@ definition(
 
 preferences {
     page name:"pageOne"
-    page name:"pageStatus"
+//    page name:"pageStatus"
     page name:"pageSettings"
 }
 def pageOne(){
@@ -42,9 +42,11 @@ dynamicPage (name: "pageOne", title: "Controller Credentials", install: true, un
     	}
 }
 }
-def pageStatus(){
+/*def pageStatus(){
 dynamicPage (name: "pageStatus", title: "Controller Status", uninstall: false){
         section ("Current Controller") {
+            paragraph title: "Controller Status",
+            required: true
             def apiValid = validateAPI()
             if (apiValid) {
                 "The current controller is"
@@ -52,6 +54,7 @@ dynamicPage (name: "pageStatus", title: "Controller Status", uninstall: false){
         }
 } 
 }
+*/
 def pageSettings(){
 dynamicPage (name: "pageSettings", title: "App Settings", uninstall: false){
     	section("Configure your Hydrawise Settings") {
@@ -114,12 +117,12 @@ def sprinklerGet(evt) {
 }
 
 // Example success method
-
+/*
 def validateAPI(result) {
     sendNotificationEvent("API Valid")
     result = true
 }
-
+*/
 def success() {
         def message = """
                 <p>Success</p>
