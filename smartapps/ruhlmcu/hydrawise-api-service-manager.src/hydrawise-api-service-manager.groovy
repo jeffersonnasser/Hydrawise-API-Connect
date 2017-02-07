@@ -39,14 +39,11 @@ dynamicPage (name: "pageOne", title: "Controller Credentials", install: true, un
             required: true,
 					"This is the set-up page to allow you to access your Hydrawise Controller. The API Key is found in the Account section of your Hydrawise Dashboard."
     	}
-        {
-        section "Current Controller"
-            paragraph title: "Current Controller",
-            required: true,
-               "The current controller is: ${resp.data.customer_id} ${resp.data.current_controller}"
-        }
-        section([title:"Options", mobileOnly:false]) {
-			href "pageSettings", title: "Settings", description: none
+        section "Current Controller"{
+            def apiValid = validateAPI()
+            if (apiValid) {
+                "The current controller is"
+            }
         }
 	}
 }
@@ -112,6 +109,12 @@ def sprinklerGet(evt) {
 }
 
 // Example success method
+
+def validateAPI(result) {
+    sendNotificationEvent("API Valid")
+    result = true
+}
+
 def success() {
         def message = """
                 <p>Success</p>
