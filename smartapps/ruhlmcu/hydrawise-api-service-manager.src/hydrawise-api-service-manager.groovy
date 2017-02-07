@@ -40,9 +40,21 @@ dynamicPage (name: "pageOne", title: "Controller Credentials", install: true, un
             required: true,
 					"This is the set-up page to allow you to access your Hydrawise Controller. The API Key is found in the Account section of your Hydrawise Dashboard."
     	}
+        section("page") {
+            href(name: "SetPage",
+                 title: "Settings Page",
+                 required: false,
+                 page: "pageSettings")
+        }
+        section("StatPage") {
+            href(name: "href",
+                 title: "Status Page",
+                 required: false,
+                 page: "pageStatus")
+        }
 }
 }
-/*def pageStatus(){
+def pageStatus(){
 dynamicPage (name: "pageStatus", title: "Controller Status", uninstall: false){
         section ("Current Controller") {
             paragraph title: "Controller Status",
@@ -54,7 +66,7 @@ dynamicPage (name: "pageStatus", title: "Controller Status", uninstall: false){
         }
 } 
 }
-*/
+
 def pageSettings(){
 dynamicPage (name: "pageSettings", title: "App Settings", uninstall: false){
     	section("Configure your Hydrawise Settings") {
