@@ -39,6 +39,12 @@ dynamicPage (name: "pageOne", title: "Controller Credentials", install: true, un
             required: true,
 					"This is the set-up page to allow you to access your Hydrawise Controller. The API Key is found in the Account section of your Hydrawise Dashboard."
     	}
+        {
+        section "Current Controller"
+            paragraph title: "Current Controller",
+            required: true,
+               "The current controller is: ${resp.data.customer_id} ${resp.data.current_controller}"
+        }
         section([title:"Options", mobileOnly:false]) {
 			href "pageSettings", title: "Settings", description: none
         }
