@@ -27,7 +27,7 @@ definition(
 
 preferences {
     page name:"pageOne"
-//    page name:"pageStatus"
+    page name:"pageStatus"
     page name:"pageSettings"
 }
 def pageOne(){
