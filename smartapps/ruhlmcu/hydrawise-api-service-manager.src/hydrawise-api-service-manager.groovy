@@ -27,7 +27,7 @@ definition(
 
 preferences {
     page name:"pageOne"
-    page name:"pageStatus"
+//    page name:"pageStatus"
     page name:"pageSettings"
 }
 def pageOne(){
@@ -54,21 +54,23 @@ dynamicPage (name: "pageOne", title: "Controller Credentials", install: true, un
         }
 }
 }
+/*
 def pageStatus(){
-dynamicPage (name: "pageStatus", title: "Controller Status", uninstall: false){
-        section ("Current Controller") {
-            paragraph title: "Controller Status",
-            required: true
+  dynamicPage (name: "pageStatus", title: "Controller Status", uninstall: false, install: false) {
             def apiValid = validateAPI()
-            if (apiValid) {
-                "The current controller is"
+            log.info "API Valid is: ${apiValid}"
+            if (apiValid){
+                section ("Status"){
+                    paragraph title: "Status",
+                    required: true,
+                         "The current controller is ${contID}"
+                     }
             }
         }
-} 
-}
-
+   } 
+*/
 def pageSettings(){
-dynamicPage (name: "pageSettings", title: "App Settings", uninstall: false){
+dynamicPage (name: "pageSettings", title: "App Settings", uninstall: false, install: false){
     	section("Configure your Hydrawise Settings") {
             input "debugOn", "bool", title: "Turn on to activate debug messages", defaultValue: false
             input "notifyOn", "bool", title: "Turn on to activate notifications", defaultValue: false
@@ -88,12 +90,12 @@ def updated() {
 }
 
 def initialize() {
-//    runEvery1Hour(sprinklerGet)
-	subscribe(app, sprinklerGet)
+//    runEvery1Hour(availablecontrollersGet)
+	subscribe(app, availablecontrollersGet)
 }
 //Methods
 //This is the Discovery method for my Hydrawise Controller
-def sprinklerGet(evt) {
+def availablecontrollersGet(evt) {
     def params = [
         uri: "https://hydrawise.com/api/v1/",
         path: "customerdetails.php",
@@ -111,9 +113,13 @@ def sprinklerGet(evt) {
                log.debug "$resp.data.error_msg"
                }
                if (resp.data.controller_id != ""){
+                    log.info( "Number of Controllers: ${resp.data.controllers.size}")
                     log.info( "Current Controller ID: ${resp.data.controller_id}")
-                    sendNotificationEvent( "Current Customer ID: ${resp.data.customer_id}")
-                    sendNotificationEvent( "Current Controller Name: ${resp.data.current_controller}")                  
+                        def contID = resp.data.controller_id
+                    if (notifyOn){
+                        sendNotificationEvent( "Current Customer ID: ${resp.data.customer_id}")
+                        sendNotificationEvent( "Current Controller Name: ${resp.data.current_controller}") 
+                    }
                }
                else {
                    if (debugOn){
@@ -128,42 +134,9 @@ def sprinklerGet(evt) {
     }
 }
 
-// Example success method
-/*
 def validateAPI(result) {
-    sendNotificationEvent("API Valid")
+      if (notifyOn){
+          sendNotificationEvent("API Valid")
+       }
     result = true
-}
-*/
-def success() {
-        def message = """
-                <p>Success</p>
-                <p>Click 'Done' to finish setup.</p>
-        """
-        displayMessageAsHtml(message)
-}
-
-// Example fail method
-def fail() {
-    def message = """
-        <p>There was an error connecting your account with SmartThings</p>
-        <p>Please try again.</p>
-    """
-    displayMessageAsHtml(message)
-}
-
-def displayMessageAsHtml(message) {
-    def html = """
-        <!DOCTYPE html>
-        <html>
-            <head>
-            </head>
-            <body>
-                <div>
-                    ${message}
-                </div>
-            </body>
-        </html>
-    """
-    render contentType: 'text/html', data: html
 }
