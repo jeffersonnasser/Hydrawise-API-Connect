@@ -30,6 +30,7 @@ definition(
     author: "curt@ruhlman.us",
     description: "Schedule sprinklers to run unless there is rain.",
     version: "0.0.4",
+    category: "Convenience",
     iconUrl: "https://s3.amazonaws.com/smartapp-icons/Meta/water_moisture.png",
     iconX2Url: "https://s3.amazonaws.com/smartapp-icons/Meta/water_moisture@2x.png"
 )
