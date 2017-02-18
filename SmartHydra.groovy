@@ -28,7 +28,7 @@ definition(
     name: "SmartHydra v0.0.1",
     namespace: "ruhlmcu/smart_sprinkler",
     author: "curt@ruhlman.us",
-    description: "SmartApp for simple Hydrawise zone control",
+    description: "SmartApp for simple Hydrawise zone control!",
     version: "0.0.4",
     iconUrl: "https://s3.amazonaws.com/smartapp-icons/Meta/water_moisture.png",
     iconX2Url: "https://s3.amazonaws.com/smartapp-icons/Meta/water_moisture@2x.png"
