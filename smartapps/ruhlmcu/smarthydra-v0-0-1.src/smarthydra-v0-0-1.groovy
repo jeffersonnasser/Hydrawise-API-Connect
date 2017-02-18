@@ -28,7 +28,7 @@ definition(
     name: "SmartHydra v0.0.1",
     namespace: "ruhlmcu",
     author: "curt@ruhlman.us",
-    description: "Schedule sprinklers to run unless there is rain.",
+    description: "Control Hydrawise Schedule from a SmartApp",
     version: "0.0.4",
     category: "Convenience",
     iconUrl: "https://s3.amazonaws.com/smartapp-icons/Meta/water_moisture.png",
